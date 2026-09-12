@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory Reports</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="details-page">
+
+        <h1>📊 Inventory Reports</h1>
+
+        <p>
+            Complete analysis of your grocery store inventory.
+        </p>
+
+        <hr>
+
+
+        <!-- SUMMARY -->
+
+        <h2>Inventory Summary</h2>
+
+        <div class="dashboard">
+
+            <div class="card">
+
+                <h3>Total Products</h3>
+
+                <p>
+                    {{ total_products }}
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Total Quantity</h3>
+
+                <p>
+                    {{ total_quantity }}
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Low Stock</h3>
+
+                <p>
+                    {{ low_stock_products|length }}
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Out of Stock</h3>
+
+                <p>
+                    {{ out_of_stock_products|length }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- INVENTORY VALUE -->
+
+        <div class="product-details-card">
+
+            <div class="detail-row total-row">
+
+                <strong>
+                    💰 Total Inventory Value
+                </strong>
+
+                <span>
+                    ₹{{ "%.2f"|format(total_value) }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- CATEGORY REPORT -->
+
+        <h2>📦 Category Report</h2>
+
+        {% if categories %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Category</th>
+
+                        <th>Products</th>
+
+                        <th>Total Quantity</th>
+
+                        <th>Inventory Value</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for category, data in categories.items() %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ category }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ data.products }}
+                        </td>
+
+                        <td>
+                            {{ data.quantity }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(data.value) }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div class="empty-message">
+                No category data available.
+            </div>
+
+        {% endif %}
+
+
+        <hr>
+
+
+        <!-- LOW STOCK -->
+
+        <h2>⚠️ Low Stock Report</h2>
+
+        {% if low_stock_products %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Product</th>
+
+                        <th>Category</th>
+
+                        <th>Quantity</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for product in low_stock_products %}
+
+                    <tr>
+
+                        <td>
+                            {{ product.name }}
+                        </td>
+
+                        <td>
+                            {{ product.category }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ product.quantity }}
+                            </strong>
+                        </td>
+
+                        <td>
+
+                            <span class="stock-low">
+                                Low Stock
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div class="empty-message">
+                ✅ No low-stock products.
+            </div>
+
+        {% endif %}
+
+
+        <hr>
+
+
+        <!-- OUT OF STOCK -->
+
+        <h2>🚨 Out-of-Stock Report</h2>
+
+        {% if out_of_stock_products %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Product</th>
+
+                        <th>Category</th>
+
+                        <th>Quantity</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for product in out_of_stock_products %}
+
+                    <tr>
+
+                        <td>
+                            {{ product.name }}
+                        </td>
+
+                        <td>
+                            {{ product.category }}
+                        </td>
+
+                        <td>
+                            {{ product.quantity }}
+                        </td>
+
+                        <td>
+
+                            <span class="stock-out">
+                                Out of Stock
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+            <div class="empty-message">
+                ✅ No products are out of stock.
+            </div>
+
+        {% endif %}
+
+
+        <hr>
+
+
+        <!-- ALL PRODUCTS -->
+
+        <h2>🛒 Complete Product Report</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Product</th>
+
+                        <th>Category</th>
+
+                        <th>Barcode</th>
+
+                        <th>Price</th>
+
+                        <th>Quantity</th>
+
+                        <th>Total Value</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+
+                        <td>
+                            {{ product.id }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ product.name }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ product.category }}
+                        </td>
+
+                        <td>
+                            {% if product.barcode %}
+                                {{ product.barcode }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(product.price) }}
+                        </td>
+
+                        <td>
+                            {{ product.quantity }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(
+                                product.price * product.quantity
+                            ) }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <br><br>
+
+
+        <a href="/" class="button">
+            ← Back to Inventory
+        </a>
+
+    </div>
+
+</body>
+
+</html>

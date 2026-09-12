@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Barcode Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode"
+            type="text/javascript"></script>
+
+</head>
+
+
+<body>
+
+    <div class="form-page">
+
+        <h1>Add New Product</h1>
+
+        <p>
+            Add a new product to the grocery inventory.
+        </p>
+
+
+        <form method="POST">
+
+
+            <!-- PRODUCT NAME -->
+
+            <label for="name">
+                Product Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter product name"
+                required
+            >
+
+
+            <!-- CATEGORY -->
+
+            <label for="category">
+                Category
+            </label>
+
+            <input
+                type="text"
+                id="category"
+                name="category"
+                placeholder="Enter category"
+                required
+            >
+
+
+            <!-- BARCODE -->
+
+            <label for="barcode">
+                Barcode
+            </label>
+
+            <input
+                type="text"
+                id="barcode"
+                name="barcode"
+                placeholder="Enter or scan barcode"
+            >
+
+
+            <button
+                type="button"
+                onclick="startScanner()">
+
+                📷 Scan Barcode
+
+            </button>
+
+
+            <!-- SCANNER -->
+
+            <div
+                id="reader"
+                style="
+                    width: 100%;
+                    max-width: 500px;
+                    margin-top: 20px;
+                ">
+            </div>
+
+
+            <p id="scan-message">
+                Click "Scan Barcode" to start the camera.
+            </p>
+
+
+            <!-- PRICE -->
+
+            <label for="price">
+                Price
+            </label>
+
+            <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="Enter price"
+                step="0.01"
+                min="0"
+                required
+            >
+
+
+            <!-- QUANTITY -->
+
+            <label for="quantity">
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                placeholder="Enter quantity"
+                min="0"
+                required
+            >
+
+
+            <!-- SUBMIT -->
+
+            <button type="submit">
+                Add Product
+            </button>
+
+        </form>
+
+
+        <br>
+
+
+        <a href="/" class="back-link">
+            ← Back to Inventory
+        </a>
+
+    </div>
+
+
+
+    <script>
+
+        let scanner = null;
+
+        let scannerRunning = false;
+
+
+        function startScanner() {
+
+            const message =
+                document.getElementById("scan-message");
+
+
+            if (scannerRunning) {
+
+                message.innerText =
+                    "Scanner is already running.";
+
+                return;
+
+            }
+
+
+            message.innerText =
+                "Starting camera... Please allow camera access.";
+
+
+            scanner = new Html5Qrcode("reader");
+
+
+            /*
+             * Common grocery barcode formats
+             */
+
+            const formatsToSupport = [
+
+                Html5QrcodeSupportedFormats.EAN_13,
+
+                Html5QrcodeSupportedFormats.EAN_8,
+
+                Html5QrcodeSupportedFormats.UPC_A,
+
+                Html5QrcodeSupportedFormats.UPC_E,
+
+                Html5QrcodeSupportedFormats.CODE_128,
+
+                Html5QrcodeSupportedFormats.CODE_39
+
+            ];
+
+
+            scanner.start(
+
+                {
+                    facingMode: "environment"
+                },
+
+                {
+
+                    fps: 15,
+
+                    qrbox: {
+                        width: 350,
+                        height: 200
+                    },
+
+                    aspectRatio: 1.777778,
+
+                    formatsToSupport: formatsToSupport
+
+                },
+
+
+                function(decodedText) {
+
+
+                    /*
+                     * Put scanned barcode
+                     * into barcode input
+                     */
+
+                    document.getElementById("barcode").value =
+                        decodedText;
+
+
+                    message.innerText =
+                        "✅ Barcode scanned successfully: " +
+                        decodedText;
+
+
+                    scannerRunning = false;
+
+
+                    /*
+                     * Stop camera after successful scan
+                     */
+
+                    scanner.stop()
+
+                        .then(function() {
+
+                            console.log(
+                                "Scanner stopped successfully."
+                            );
+
+                        })
+
+                        .catch(function(error) {
+
+                            console.log(
+                                "Error stopping scanner:",
+                                error
+                            );
+
+                        });
+
+                },
+
+
+                function(errorMessage) {
+
+                    /*
+                     * Scanner is continuously
+                     * searching for a barcode.
+                     *
+                     * No message is displayed here
+                     * because this callback runs
+                     * many times per second.
+                     */
+
+                }
+
+            )
+
+            .then(function() {
+
+                scannerRunning = true;
+
+                message.innerText =
+                    "📷 Camera active. Place the barcode inside the box.";
+
+            })
+
+            .catch(function(error) {
+
+                scannerRunning = false;
+
+                message.innerText =
+                    "❌ Unable to start camera. Please allow camera permission.";
+
+                console.log(
+                    "Camera error:",
+                    error
+                );
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

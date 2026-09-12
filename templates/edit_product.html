@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Product</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="form-page">
+
+        <h1>Edit Product</h1>
+
+        <p>Update the product information.</p>
+
+        <form method="POST">
+
+            <label for="name">
+                Product Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{ product.name }}"
+                required
+            >
+
+
+            <label for="category">
+                Category
+            </label>
+
+            <input
+                type="text"
+                id="category"
+                name="category"
+                value="{{ product.category }}"
+                required
+            >
+
+
+            <label for="barcode">
+                Barcode
+            </label>
+
+            <input
+                type="text"
+                id="barcode"
+                name="barcode"
+                value="{{ product.barcode or '' }}"
+                placeholder="Enter or scan barcode"
+            >
+
+
+            <label for="price">
+                Price
+            </label>
+
+            <input
+                type="number"
+                id="price"
+                name="price"
+                value="{{ product.price }}"
+                step="0.01"
+                min="0"
+                required
+            >
+
+
+            <label for="quantity">
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value="{{ product.quantity }}"
+                min="0"
+                required
+            >
+
+
+            <button type="submit">
+                Update Product
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="/" class="back-link">
+            ← Back to Inventory
+        </a>
+
+    </div>
+
+</body>
+
+</html>

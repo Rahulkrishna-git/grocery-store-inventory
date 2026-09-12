@@ -1,0 +1,549 @@
+/* =========================================
+   GROCERY INVENTORY - PROFESSIONAL UI
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7f6;
+    color: #263238;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.header {
+    background: linear-gradient(135deg, #087f5b, #12b886);
+    color: white;
+    padding: 35px 45px;
+    margin: 0 0 30px 0;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 8px 25px rgba(8, 127, 91, 0.20);
+}
+
+.header h1 {
+    margin: 0;
+    color: white;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #e6fcf5;
+    font-size: 17px;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+
+body > h2,
+body > hr,
+body > .dashboard,
+body > .actions,
+body > .search-form,
+body > .table-container,
+body > .empty-message {
+    margin-left: 36px;
+    margin-right: 36px;
+}
+
+h2 {
+    color: #087f5b;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 18px;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: #dce5e2;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+
+/* =========================================
+   DASHBOARD CARDS
+   ========================================= */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    background: white;
+    padding: 25px;
+    min-height: 145px;
+    border-radius: 16px;
+    border: 1px solid #e4ece9;
+    box-shadow: 0 6px 20px rgba(38, 50, 56, 0.08);
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(38, 50, 56, 0.12);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background: #12b886;
+}
+
+.card h3 {
+    margin: 0 0 18px;
+    color: #607d8b;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card p {
+    margin: 0;
+    color: #087f5b;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.button,
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 9px;
+    background: #087f5b;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button:hover,
+button:hover {
+    background: #066c4d;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(8, 127, 91, 0.25);
+}
+
+
+/* Reports button */
+
+.actions .button:nth-child(2) {
+    background: #4263eb;
+}
+
+.actions .button:nth-child(2):hover {
+    background: #364fc7;
+}
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+.search-form {
+    max-width: 900px;
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid #e4ece9;
+    box-shadow: 0 5px 18px rgba(38, 50, 56, 0.07);
+}
+
+.search-form input {
+    margin-bottom: 12px;
+}
+
+
+/* =========================================
+   FORMS
+   ========================================= */
+
+form {
+    background: white;
+    padding: 28px;
+    max-width: 650px;
+    border-radius: 15px;
+    border: 1px solid #e4ece9;
+    box-shadow: 0 6px 20px rgba(38, 50, 56, 0.08);
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    color: #37474f;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+label:first-child {
+    margin-top: 0;
+}
+
+input {
+    width: 100%;
+    padding: 13px 14px;
+    margin-bottom: 8px;
+    border: 1px solid #cfd8d5;
+    border-radius: 8px;
+    background: #fbfcfc;
+    color: #263238;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+input:focus {
+    border-color: #12b886;
+    box-shadow: 0 0 0 3px rgba(18, 184, 134, 0.12);
+    background: white;
+}
+
+form button {
+    margin-top: 18px;
+}
+
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(38, 50, 56, 0.08);
+}
+
+table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+    background: white;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 15px 14px;
+    border-bottom: 1px solid #edf2f0;
+    text-align: left;
+}
+
+th {
+    background: #087f5b;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+td {
+    font-size: 14px;
+}
+
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+    background: #f0faf6;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================
+   ACTION LINKS
+   ========================================= */
+
+.actions-cell {
+    white-space: nowrap;
+}
+
+.actions-cell a {
+    color: #087f5b;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.actions-cell a:hover {
+    text-decoration: underline;
+    color: #055c42;
+}
+
+
+/* =========================================
+   STOCK STATUS
+   ========================================= */
+
+.stock-in,
+.stock-low,
+.stock-out {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stock-in {
+    color: #087f5b;
+    background: #d3f9d8;
+}
+
+.stock-low {
+    color: #e67700;
+    background: #fff3bf;
+}
+
+.stock-out {
+    color: #c92a2a;
+    background: #ffe3e3;
+}
+
+
+/* =========================================
+   EMPTY MESSAGE
+   ========================================= */
+
+.empty-message {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #e4ece9;
+    box-shadow: 0 5px 18px rgba(38, 50, 56, 0.06);
+}
+
+
+/* =========================================
+   ADD / EDIT PRODUCT PAGE
+   ========================================= */
+
+.form-page {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.form-page h1 {
+    color: #087f5b;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.form-page > p {
+    color: #607d8b;
+    margin-bottom: 25px;
+}
+
+
+/* =========================================
+   PRODUCT DETAILS
+   ========================================= */
+
+.details-page {
+    max-width: 1000px;
+    margin: 45px auto;
+    padding: 0 20px;
+}
+
+.details-page > h1 {
+    color: #087f5b;
+    font-size: 32px;
+}
+
+.product-details-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #e4ece9;
+    box-shadow: 0 7px 22px rgba(38, 50, 56, 0.08);
+    margin-top: 25px;
+}
+
+.product-details-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #edf2f0;
+}
+
+.total-row {
+    font-size: 18px;
+    border-bottom: none;
+    padding-top: 22px;
+}
+
+.details-actions {
+    margin-top: 25px;
+}
+
+.details-actions .back-link {
+    margin-left: 18px;
+}
+
+
+/* =========================================
+   BARCODE SCANNER
+   ========================================= */
+
+#reader {
+    border: 2px dashed #12b886;
+    border-radius: 12px;
+    padding: 10px;
+    background: #f0faf6;
+    overflow: hidden;
+}
+
+#scan-message {
+    color: #087f5b;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+
+/* =========================================
+   BACK LINK
+   ========================================= */
+
+.back-link {
+    color: #087f5b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 0;
+    }
+
+    .header {
+        padding: 28px 22px;
+        border-radius: 0 0 16px 16px;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    body > h2,
+    body > hr,
+    body > .dashboard,
+    body > .actions,
+    body > .search-form,
+    body > .table-container,
+    body > .empty-message {
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions .button {
+        width: 100%;
+    }
+
+    .search-form {
+        max-width: none;
+    }
+
+    .form-page,
+    .details-page {
+        margin-top: 30px;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+    }
+
+    .details-actions .back-link {
+        display: block;
+        margin-left: 0;
+        margin-top: 18px;
+    }
+
+}
